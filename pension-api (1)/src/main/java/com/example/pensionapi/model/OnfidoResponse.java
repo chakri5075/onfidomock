@@ -61,7 +61,7 @@ public class OnfidoResponse {
         return idNumber;
     }
 
-    public void setIdNumber(String nino) {
+    public void setIdNumber(String idNumber) {
         this.idNumber = idNumber;
     }
 }
