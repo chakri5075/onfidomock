@@ -7,12 +7,17 @@ import com.example.pensionapi.model.PensionRecord;
 import com.example.secondaryapi.service.SecondaryPensionService;
 import org.springframework.stereotype.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Optional;
 
 @Service
 public class PensionService {
+    private static final Logger logger = LoggerFactory.getLogger(PensionService.class);
 
     public PensionResponse processImageType(String imageType) {
+        logger.info("Processing imageType: {}", imageType);
 //        if (!"NINO".equalsIgnoreCase(imageType) && !"Passport".equalsIgnoreCase(imageType)) {
 //            return new PensionResponse(null,null,null,null,null,null,null,null,0.0,"Dcoument Invalid");
 //        }
@@ -40,11 +45,14 @@ public class PensionService {
 
         if (record.isPresent()) {
             PensionRecord r = record.get();
+            logger.info("Record found for imageType {}: {}", imageType, r);
             return new PensionResponse(r.getFirstName(), r.getLastName(), r.getDob(), r.getAddress(),r.getCity(),r.getPostalCode(),
                     r.getPensionScheme(), r.getPensionAccount(), r.getTotalDeposited(), "VALID");
         }
 
+        logger.info("No record found for imageType {}. Using Onfido response.", imageType);
         assert onfidoResponse != null;
+        logger.info("Onfido response: {}", onfidoResponse);
         return new PensionResponse(onfidoResponse.getFirstName(), onfidoResponse.getLastName(), onfidoResponse.getDob(), onfidoResponse.getAddress(), onfidoResponse.getCity(), onfidoResponse.getPostalCode(), null, null,null, "Document Valid");
     }
 
