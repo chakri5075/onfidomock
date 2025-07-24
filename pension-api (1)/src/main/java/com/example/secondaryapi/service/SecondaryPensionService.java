@@ -7,26 +7,30 @@ import com.example.pensionapi.model.PensionRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
 public class SecondaryPensionService {
+    private static final Logger logger = LoggerFactory.getLogger(SecondaryPensionService.class);
 
-    public static Optional<PensionRecord> getDetailsFromSecondaryApi(String firstName, String lastName, String dob,String nino, String postCode) {
-      //call sri api
+    public static Optional<PensionRecord> getDetailsFromSecondaryApi(String firstName, String lastName, String dob, String idNumber, String postalCode) {
+        logger.info("Calling secondary API with firstName={}, lastName={}, dob={}, idNumber={}, postalCode={}", firstName, lastName, dob, idNumber, postalCode);
+        //call sri api
 
-    RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();
         String url="http://localhost:8081/api/customer-data/fetchpensiondetails";
 
         CustomerPensionFormPayload cpfl = new CustomerPensionFormPayload();
         cpfl.setFirstName(firstName);
         cpfl.setLastName(lastName);
         cpfl.setDateOfBirth(dob);
-        cpfl.setNino(nino);
-        cpfl.setPostcode(postCode);
+        cpfl.setNino(idNumber);
+        cpfl.setPostcode(postalCode);
 
         HttpHeaders headers = new HttpHeaders();
-         HttpEntity<CustomerPensionFormPayload> requestEntity = new HttpEntity<>(cpfl, headers);
+        HttpEntity<CustomerPensionFormPayload> requestEntity = new HttpEntity<>(cpfl, headers);
         ResponseEntity<CustomerPensionFormResponse> response = restTemplate.exchange(
                 url,
                 HttpMethod.POST,
@@ -35,6 +39,7 @@ public class SecondaryPensionService {
         );
 
         CustomerPensionFormResponse cpfr = response.getBody();
+        logger.info("Received response from secondary API: {}", cpfr);
         return Optional.of(new PensionRecord(cpfr.getFirstName(), cpfr.getLastName(), cpfr.getDateOfBirth(), cpfr.getAddress(), "london", cpfr.getPostalcode(), cpfr.getPensionScheme(), cpfr.getAccountNumber(), Double.parseDouble(cpfr.getTotalAmountDeposited())));
 //        PensionRecord pensionRecord = response.getBody();
 
