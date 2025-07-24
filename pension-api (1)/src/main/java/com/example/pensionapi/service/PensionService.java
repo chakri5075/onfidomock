@@ -65,7 +65,7 @@ public class PensionService {
             onfidoResponse.setIdNumber("QQ 12 34 54 A");
             onfidoResponse.setPostalCode("SW1A 1AA");
             return onfidoResponse;
-        }else if(imageType.equalsIgnoreCase("PASSPORT")){
+        } else if(imageType.equalsIgnoreCase("PASSPORT")){
             OnfidoResponse onfidoResponse = new OnfidoResponse();
             onfidoResponse.setFirstName("Jane");
             onfidoResponse.setLastName("Smith");
@@ -73,7 +73,15 @@ public class PensionService {
             onfidoResponse.setIdNumber("7700225VH");
             onfidoResponse.setPostalCode("SW2B 2BB");
             return onfidoResponse;
-        }else{
+        } else if(imageType.equalsIgnoreCase("DL")){
+                OnfidoResponse onfidoResponse = new OnfidoResponse();
+                onfidoResponse.setFirstName("kevin");
+                onfidoResponse.setLastName("Peterson");
+                onfidoResponse.setDob("1978-06-15");
+                onfidoResponse.setIdNumber("SMITH807152JD99");
+                onfidoResponse.setPostalCode("SW2B 2BB");
+                return onfidoResponse;
+        } else{
             return null;
         }
     }
