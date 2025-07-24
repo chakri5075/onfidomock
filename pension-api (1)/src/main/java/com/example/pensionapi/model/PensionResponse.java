@@ -14,10 +14,10 @@ public class PensionResponse {
     private String postalCode;
     private String pensionScheme;
     private String pensionAccount;
-    private double totalDeposited;
+    private Double totalDeposited;
     private String documentStatus;
 
-    public PensionResponse(String firstName, String lastName, String dob, String address, String city, String postalCode, String pensionScheme, String pensionAccount, double totalDeposited, String documentStatus) {
+    public PensionResponse(String firstName, String lastName, String dob, String address, String city, String postalCode, String pensionScheme, String pensionAccount, Double totalDeposited, String documentStatus) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
