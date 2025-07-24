@@ -3,7 +3,7 @@ package com.example.pensionapi.model;
 public class CustomerPensionFormPayload {
     private String firstName;
     private String lastName;
-    private String nino;
+    private String idNumber;
     private String dateOfBirth;
     private String postcode;
 
@@ -19,11 +19,11 @@ public class CustomerPensionFormPayload {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public String getNino() {
-        return nino;
+    public String getIdNumber() {
+        return idNumber;
     }
-    public void setNino(String nino) {
-        this.nino = nino;
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
     }
     public String getDateOfBirth() {
         return dateOfBirth;
