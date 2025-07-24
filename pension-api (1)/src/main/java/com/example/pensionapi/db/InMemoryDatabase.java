@@ -2,11 +2,16 @@ package com.example.pensionapi.db;
 
 import com.example.pensionapi.model.PensionRecord;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class InMemoryDatabase {
+    private static final Logger logger = LoggerFactory.getLogger(InMemoryDatabase.class);
     public static List<PensionRecord> db1 = new ArrayList<>();
     public static List<PensionRecord> db2 = new ArrayList<>();
 
@@ -30,5 +35,20 @@ public class InMemoryDatabase {
                 r.getLastName().equalsIgnoreCase(lastName) &&
                 r.getDob().equals(dob)
         ).findFirst();
+    }
+
+    public Optional<PensionRecord> findRecord(String firstName, String lastName, LocalDate dob) {
+        logger.info("Searching for record: firstName={}, lastName={}, dob={}", firstName, lastName, dob);
+        Optional<PensionRecord> result = db2.stream().filter(r ->
+                r.getFirstName().equalsIgnoreCase(firstName) &&
+                r.getLastName().equalsIgnoreCase(lastName) &&
+                r.getDob().equals(dob)
+        ).findFirst();
+        if (result.isPresent()) {
+            logger.info("Record found: {}", result.get());
+        } else {
+            logger.warn("No record found for: firstName={}, lastName={}, dob={}", firstName, lastName, dob);
+        }
+        return result;
     }
 }
