@@ -41,7 +41,7 @@ public class PensionService {
         if (record.isPresent()) {
             PensionRecord r = record.get();
             return new PensionResponse(r.getFirstName(), r.getLastName(), r.getDob(), r.getAddress(),r.getCity(),r.getPostalCode(),
-                    r.getPensionScheme(), r.getPensionAccount(), r.getTotalDeposited(), "Document Valid");
+                    r.getPensionScheme(), r.getPensionAccount(), r.getTotalDeposited(), "VALID");
         }
 
         assert onfidoResponse != null;
